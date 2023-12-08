@@ -209,6 +209,23 @@ class Timestamp(Base):
     def to_heatpump(cls, value):
         return datetime.datetime.timestamp(value)
 
+class Time(Base):
+    """Time datatype, converts from and to Time."""
+
+    datatype_class = "timedelta"
+
+    @classmethod
+    def from_heatpump(cls, value):
+        if value is None:
+            return None
+        if value <= 0:
+            return datetime.timedelta(0)
+        return datetime.timedelta(seconds=value)
+
+    @classmethod
+    def to_heatpump(cls, value):
+        return value.total_seconds()
+
 
 class Errorcode(Base):
     """Errorcode datatype, converts from and to Errorcode."""
